@@ -33,7 +33,8 @@ build/
 .vscode/
 
 ### config ###
-/src/main/resources/application.yaml
+/src/main/resources/*.yaml
+/src/main/resources/*.properties
 
 ### macOS ###
 .DS_Store
