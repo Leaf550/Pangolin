@@ -1,6 +1,12 @@
 package com.yuheng.pangolin.model.response;
 
-public class ResponseBody {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ResponseBody<T> {
     private int status;
-    private Object data;
+    private T data;
+    private String message;
 }

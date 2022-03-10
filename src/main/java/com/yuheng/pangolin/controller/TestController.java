@@ -34,13 +34,6 @@ public class TestController {
         return testService.getTestDataById(id);
     }
 
-    @GetMapping("/testGetToken")
-    Token testTokenConfig(
-            @RequestParam("uid") String uid
-    ) {
-        return tokenService.createTokenByUserID(uid);
-    }
-
     @GetMapping("/testParseToken")
     Claims testParseToken(
         @RequestParam("token") String token
