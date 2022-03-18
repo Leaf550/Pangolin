@@ -1,6 +1,6 @@
 package com.yuheng.pangolin.repository.user;
 
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.User;
 
 import java.util.List;
 

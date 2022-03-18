@@ -1,8 +1,8 @@
 package com.yuheng.pangolin.service.token;
 
 import com.yuheng.pangolin.config.TokenConfig;
-import com.yuheng.pangolin.model.Token;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
 @Component
 public class TokenServiceImpl implements TokenService {
@@ -39,6 +38,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Claims parseToken(String token) {
+        if (token == null || token.isEmpty()) {
+            return null;
+        }
         Key key = getHS256Key();
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -55,6 +57,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String getUserId(String token) {
+        if (token == null || token.isEmpty()) {
+            return null;
+        }
         Claims claims = parseToken(token);
         return claims.getSubject();
     }

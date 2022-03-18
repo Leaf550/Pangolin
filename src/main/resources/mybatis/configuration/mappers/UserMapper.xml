@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuheng.pangolin.mapper.UserMapper">
 
-    <select id="getUserByUID" resultType="com.yuheng.pangolin.model.User">
-        select * from users where id=#{uid}
+    <select id="getUserByUID" resultType="com.yuheng.pangolin.model.user.User">
+        select * from users where uid=#{uid}
     </select>
 
-    <select id="getUserByUsername" resultType="com.yuheng.pangolin.model.User">
+    <select id="getUserByUsername" resultType="com.yuheng.pangolin.model.user.User">
         select * from users where username=#{username}
     </select>
     
-    <insert id="addUser" parameterType="com.yuheng.pangolin.model.User">
+    <insert id="addUser" parameterType="com.yuheng.pangolin.model.user.User">
         insert into users (uid, username, secPassword, salt, level, experience)
         values (#{uid}, #{username}, #{secPassword}, #{salt}, #{level}, #{experience})
     </insert>

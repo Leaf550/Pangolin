@@ -1,4 +1,4 @@
-package com.yuheng.pangolin.model;
+package com.yuheng.pangolin.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

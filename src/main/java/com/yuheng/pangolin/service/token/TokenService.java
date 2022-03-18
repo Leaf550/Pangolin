@@ -1,7 +1,7 @@
 package com.yuheng.pangolin.service.token;
 
-import com.yuheng.pangolin.model.Token;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
 import io.jsonwebtoken.Claims;
 
 public interface TokenService {

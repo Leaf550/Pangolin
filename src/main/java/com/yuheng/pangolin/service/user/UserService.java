@@ -1,9 +1,9 @@
 package com.yuheng.pangolin.service.user;
 
-import com.yuheng.pangolin.exception.BaseException;
-import com.yuheng.pangolin.exception.user.UserException;
-import com.yuheng.pangolin.model.Token;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
+
+import java.util.List;
 
 public interface UserService {
     // 注册

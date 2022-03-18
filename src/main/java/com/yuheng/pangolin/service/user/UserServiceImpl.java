@@ -2,15 +2,16 @@ package com.yuheng.pangolin.service.user;
 
 import com.yuheng.pangolin.constant.StatusCode;
 import com.yuheng.pangolin.encryption.Encryptor;
-import com.yuheng.pangolin.exception.BaseException;
-import com.yuheng.pangolin.exception.user.UserException;
-import com.yuheng.pangolin.model.Token;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
 import com.yuheng.pangolin.repository.user.UserRepository;
 import com.yuheng.pangolin.service.token.TokenService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Component
 public class UserServiceImpl implements UserService {

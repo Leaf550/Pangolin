@@ -1,7 +1,6 @@
 package com.yuheng.pangolin.controller;
 
 import com.yuheng.pangolin.model.TestModel;
-import com.yuheng.pangolin.model.Token;
 import com.yuheng.pangolin.service.test.TestService;
 import com.yuheng.pangolin.service.token.TokenService;
 import io.jsonwebtoken.Claims;

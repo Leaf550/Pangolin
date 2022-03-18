@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuheng.pangolin.mapper.TaskMapper">
+    <!--  获取所有非置顶列表  -->
+    <select id="getAllTaskList" resultType="com.yuheng.pangolin.model.task.TaskList">
+        select * from taskLists where uid=#{uid} and listType=4 order by createTime
+    </select>
+
+    <select id="getAllTask" resultType="com.yuheng.pangolin.model.task.Task">
+        select * from tasks where uid=#{uid}
+    </select>
+
+    <!--  获取某列表所有任务  -->
+    <select id="getAllTaskInList" resultType="com.yuheng.pangolin.model.task.Task">
+        select * from tasks where listId=#{listId}
+    </select>
+
+    <select id="getTaskListWithType" resultType="com.yuheng.pangolin.model.task.TaskList">
+        select * from taskLists where uid=#{uid} and listType=#{type}
+    </select>
+
+    <!--  获取某列表  -->
+    <select id="getTaskList" resultType="com.yuheng.pangolin.model.task.TaskList">
+        select * from taskLists where listId=#{listId}
+    </select>
+
+    <!--  获取某任务  -->
+    <select id="getTask" resultType="com.yuheng.pangolin.model.task.Task">
+        select * from tasks where taskId=#{taskId}
+    </select>
+
+    <!--  新增任务列表  -->
+    <insert id="addTaskList" parameterType="com.yuheng.pangolin.model.task.TaskList">
+        insert into taskLists
+            (listId, uid, listType, listName, listColor, imageName, completedCount, createTime, sortedBy)
+        values
+            ( #{listId}, #{uid}, #{listType}, #{listName}, #{listColor}, #{imageName}, #{completedCount},
+               #{createTime}, #{sortedBy})
+    </insert>
+
+    <!--  新增任务  -->
+    <insert id="addTask" parameterType="com.yuheng.pangolin.model.task.Task">
+        insert into tasks
+            (uid, taskId, title, comment, date, time, isImportant, isCompleted,
+             createTime, priority, listId)
+        values
+            (#{uid}, #{taskId}, #{title}, #{comment}, #{date}, #{time}, #{isImportant},
+             #{isCompleted}, #{createTime}, #{priority}, #{listId})
+    </insert>
+
+    <select id="getListOrderBy">
+        select sortedBy from taskLists where listId=#{listId}
+    </select>
+
+</mapper>
