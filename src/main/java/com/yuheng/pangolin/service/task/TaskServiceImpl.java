@@ -91,6 +91,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task getTask(String uid, String taskId) {
+        if (isTaskBelongsToUser(uid, taskId)) {
+            return taskRepository.getTask(taskId);
+        }
+        return null;
+    }
+
+    @Override
     public boolean isTaskListBelongsToUser(String uid, String listID) {
         TaskList list = taskRepository.getTaskList(listID);
         return list.getUid().equals(uid);
@@ -127,6 +135,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void removeTask(String uid, String taskID) {
 
+    }
+
+    @Override
+    public void setTaskCompleted(String uid, String taskID, boolean completed) {
+        Task task = getTask(uid, taskID);
+        if (task != null) {
+            task.setCompleted(completed);
+            taskRepository.updateTask(task);
+        }
     }
 
 }

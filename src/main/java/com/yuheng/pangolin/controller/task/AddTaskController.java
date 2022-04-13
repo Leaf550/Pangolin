@@ -1,4 +1,4 @@
-package com.yuheng.pangolin.controller.addTask;
+package com.yuheng.pangolin.controller.task;
 
 import com.yuheng.pangolin.constant.ResponseMessage;
 import com.yuheng.pangolin.constant.StatusCode;

@@ -57,7 +57,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public void updateTask(Task task) {
-
+        taskMapper.updateTask(task);
     }
 
     @Override

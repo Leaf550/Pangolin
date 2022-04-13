@@ -52,6 +52,8 @@ public interface TaskService {
 
     TaskList getTaskList(String uid, String listId);
 
+    Task getTask(String uid, String taskId);
+
     /**
      * 判断某个列表是否属于某人
      * @param uid 用户uid
@@ -95,6 +97,8 @@ public interface TaskService {
      * @param taskID 要删除的任务ID
      */
     void removeTask(String uid, String taskID);
+
+    public void setTaskCompleted(String uid, String taskID, boolean completed);
 
 //    void editTask(String uid, String )
 }

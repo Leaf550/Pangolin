@@ -54,4 +54,11 @@
         select sortedBy from taskLists where listId=#{listId}
     </select>
 
+    <update id="updateTask">
+        update tasks
+        set title=#{title}, comment=#{comment}, date=#{date}, time=#{time}, isCompleted=#{isCompleted},
+            isImportant=#{isImportant}, priority=#{priority}
+        where taskId=#{taskId}
+    </update>
+
 </mapper>
