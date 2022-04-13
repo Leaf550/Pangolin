@@ -38,14 +38,14 @@ public class HomeController {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
         }
         HomeData homeData = new HomeData();
-        homeData.setTodayCount(taskService.getAllTaskInToday(uid).size());
-        homeData.setImportantCount(taskService.getAllTaskIsImportant(uid).size());
-        homeData.setAllCount(taskService.getAllTask(uid).size());
-        homeData.setCompletedCount(taskService.getAllTaskIsCompleted(uid).size());
-        homeData.setToday(getTodayTasksPageData(uid));
-        homeData.setImportant(getImportantTasksPageData(uid));
-        homeData.setAll(getAllTasksPageData(uid));
-        homeData.setCompleted(getCompletedTasksPageData(uid));
+//        homeData.setTodayCount(taskService.getAllTaskInToday(uid).size());
+//        homeData.setImportantCount(taskService.getAllTaskIsImportant(uid).size());
+//        homeData.setAllCount(taskService.getAllTask(uid).size());
+//        homeData.setCompletedCount(taskService.getAllTaskIsCompleted(uid).size());
+//        homeData.setToday(getTodayTasksPageData(uid));
+//        homeData.setImportant(getImportantTasksPageData(uid));
+//        homeData.setAll(getAllTasksPageData(uid));
+//        homeData.setCompleted(getCompletedTasksPageData(uid));
         List<TaskList> taskLists = taskService.getAllTaskList(uid);
         for (TaskList taskList : taskLists) {
             List<Task> tasks = taskService.getAllTaskInList(uid, taskList.getListId());
