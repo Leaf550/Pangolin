@@ -57,7 +57,7 @@
     <update id="updateTask">
         update tasks
         set title=#{title}, comment=#{comment}, date=#{date}, time=#{time}, isCompleted=#{isCompleted},
-            isImportant=#{isImportant}, priority=#{priority}
+            isImportant=#{isImportant}, priority=#{priority}, listId=#{listId}
         where taskId=#{taskId}
     </update>
 

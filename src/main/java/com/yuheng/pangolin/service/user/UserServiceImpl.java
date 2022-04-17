@@ -4,6 +4,7 @@ import com.yuheng.pangolin.constant.StatusCode;
 import com.yuheng.pangolin.encryption.Encryptor;
 import com.yuheng.pangolin.model.user.Token;
 import com.yuheng.pangolin.model.user.User;
+import com.yuheng.pangolin.model.user.UserRes;
 import com.yuheng.pangolin.repository.user.UserRepository;
 import com.yuheng.pangolin.service.token.TokenService;
 import lombok.NonNull;
@@ -78,6 +79,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signOut(String token) {
 
+    }
+
+    @Override
+    public UserRes getUserById(String uid) {
+        User user = userRepository.getUserByUID(uid);
+        if (user == null) {
+            return null;
+        }
+        return new UserRes(user);
     }
 
     @Override

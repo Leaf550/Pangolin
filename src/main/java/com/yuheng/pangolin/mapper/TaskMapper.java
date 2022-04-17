@@ -2,9 +2,7 @@ package com.yuheng.pangolin.mapper;
 
 import com.yuheng.pangolin.model.task.Task;
 import com.yuheng.pangolin.model.task.TaskList;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 import java.util.List;

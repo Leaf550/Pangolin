@@ -7,26 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskService {
-    /**
-     * 获取所有今日任务
-     * @param uid 用户uid
-     * @return 所有今日任务
-     */
-    List<Task> getAllTaskInToday(String uid);
-
-    /**
-     * 获取所有重要任务
-     * @param uid 用户uid
-     * @return 所有重要任务
-     */
-    List<Task> getAllTaskIsImportant(String uid);
-
-    /**
-     * 获取所有已完成任务
-     * @param uid 用户uid
-     * @return 所有已完成任务
-     */
-    List<Task> getAllTaskIsCompleted(String uid);
 
     /**
      * 获取某用户所有的任务
@@ -100,6 +80,6 @@ public interface TaskService {
 
     public void setTaskCompleted(String uid, String taskID, boolean completed);
 
-//    void editTask(String uid, String )
+    void editTask(String uid, Task newTask);
 }
 

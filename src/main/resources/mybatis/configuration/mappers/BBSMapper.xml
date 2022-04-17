@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuheng.pangolin.mapper.BBSMapper">
+
+    <select id="selectAllPost" resultType="com.yuheng.pangolin.model.bbs.BBSPost">
+        select * from bbsPosts;
+    </select>
+
+    <select id="selectAllCommentForPostId" resultType="com.yuheng.pangolin.model.bbs.BBSComment">
+        select * from bbsComments where postId=#{postId};
+    </select>
+
+    <insert id="addNewPost" parameterType="com.yuheng.pangolin.model.bbs.BBSPost">
+        insert into bbsPosts
+            (postId, authorId, createTime, content, taskId, praiseCount)
+        values
+            (#{postId}, #{authorId}, #{createTime}, #{content}, #{taskId}, #{praiseCount})
+    </insert>
+
+    <insert id="addNewComment" parameterType="com.yuheng.pangolin.model.bbs.BBSComment">
+        insert into bbsComments
+            (commentId, postId, sourceUserId, targetUserId, createTime, content)
+        values
+            (#{commentId}, #{postId}, #{sourceUserId}, #{targetUserId}, #{createTime}, #{content})
+    </insert>
+
+</mapper>

@@ -2,6 +2,7 @@ package com.yuheng.pangolin.service.user;
 
 import com.yuheng.pangolin.model.user.Token;
 import com.yuheng.pangolin.model.user.User;
+import com.yuheng.pangolin.model.user.UserRes;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface UserService {
 
     // 登出
     void signOut(String token);
+
+    UserRes getUserById(String uid);
 
     // 修改用户信息
     Token editUserInfo(User user);

@@ -22,46 +22,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTaskInToday(String uid) {
-        List<Task> list = getAllTask(uid);
-        return list.stream().filter((task) -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Long dateInTask = task.getDate();
-            if (dateInTask == null) {
-                return false;
-            }
-            long taskDate = task.getDate() * 1000;
-            try {
-                Date now = sdf.parse(sdf.format(new Date()));
-                long today = now.getTime();
-                long diff = taskDate - today;
-                return diff > 0 && diff <= 24 * 60 * 60 * 1000;
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Task> getAllTaskIsImportant(String uid) {
-        List<Task> list = getAllTask(uid);
-        return list
-                .stream()
-                .filter(Task::isImportant)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Task> getAllTaskIsCompleted(String uid) {
-        List<Task> list = getAllTask(uid);
-        return list
-                .stream()
-                .filter(Task::isCompleted)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Task> getAllTask(String uid) {
         return taskRepository.getAllTask(uid);
     }
@@ -144,6 +104,14 @@ public class TaskServiceImpl implements TaskService {
             task.setCompleted(completed);
             taskRepository.updateTask(task);
         }
+    }
+
+    @Override
+    public void editTask(String uid, Task newTask) {
+        if (!isTaskBelongsToUser(uid, newTask.getTaskId())) {
+            return;
+        }
+        taskRepository.updateTask(newTask);
     }
 
 }

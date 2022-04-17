@@ -38,14 +38,6 @@ public class HomeController {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
         }
         HomeData homeData = new HomeData();
-//        homeData.setTodayCount(taskService.getAllTaskInToday(uid).size());
-//        homeData.setImportantCount(taskService.getAllTaskIsImportant(uid).size());
-//        homeData.setAllCount(taskService.getAllTask(uid).size());
-//        homeData.setCompletedCount(taskService.getAllTaskIsCompleted(uid).size());
-//        homeData.setToday(getTodayTasksPageData(uid));
-//        homeData.setImportant(getImportantTasksPageData(uid));
-//        homeData.setAll(getAllTasksPageData(uid));
-//        homeData.setCompleted(getCompletedTasksPageData(uid));
         List<TaskList> taskLists = taskService.getAllTaskList(uid);
         for (TaskList taskList : taskLists) {
             List<Task> tasks = taskService.getAllTaskInList(uid, taskList.getListId());
@@ -57,7 +49,7 @@ public class HomeController {
         return Response.responseSuccessWithData(homeData);
     }
 
-    @PostMapping("/addTaskList")
+    @PostMapping(RequestPathConstant.ADD_TASK_LIST)
     ResponseBody<?> addTaskList(
             @RequestHeader("Authorization") String token,
             @RequestParam("list_name") String listName,
@@ -81,26 +73,6 @@ public class HomeController {
         list.setSortedBy(0);
         taskService.addTaskList(uid, list);
         return Response.responseSuccess();
-    }
-
-    private TasksListPageData getTodayTasksPageData(String uid) {
-        List<Task> tasks = taskService.getAllTaskInToday(uid);
-        return composeListPageData(tasks, uid);
-    }
-
-    private TasksListPageData getImportantTasksPageData(String uid) {
-        List<Task> tasks = taskService.getAllTaskIsImportant(uid);
-        return composeListPageData(tasks, uid);
-    }
-
-    private TasksListPageData getAllTasksPageData(String uid) {
-        List<Task> tasks = taskService.getAllTask(uid);
-        return composeListPageData(tasks, uid);
-    }
-
-    private TasksListPageData getCompletedTasksPageData(String uid) {
-        List<Task> tasks = taskService.getAllTaskIsCompleted(uid);
-        return composeListPageData(tasks, uid);
     }
 
     private TasksListPageData getTasksInList(String uid, String listId) {
