@@ -7,19 +7,18 @@ import com.yuheng.pangolin.model.response.Response;
 import com.yuheng.pangolin.model.response.ResponseBody;
 import com.yuheng.pangolin.service.task.TaskService;
 import com.yuheng.pangolin.service.token.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
 @RestController
-public class CompleteTaskController {
+public class SetTaskImportantController {
 
     private final TokenService tokenService;
     private final TaskService taskService;
 
-    @Autowired
-    CompleteTaskController(
+    SetTaskImportantController(
             TokenService tokenService,
             TaskService taskService
     ) {
@@ -27,19 +26,18 @@ public class CompleteTaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping(RequestPathConstant.SET_TASK_COMPLETED)
-    ResponseBody<?> setTaskCompleted(
-            @RequestHeader("Authorization") String token,
-            @RequestParam("taskId") String taskId,
-            @RequestParam("completed") boolean completed
+    @GetMapping(RequestPathConstant.SET_TASK_IMPORTANT)
+    ResponseBody<?> setTaskImportant(
+            @RequestHeader("authorization") String token,
+            @RequestParam("taskID") String taskID,
+            @RequestParam("important") boolean important
     ) {
         String uid = tokenService.getUserId(token);
         if (uid == null || uid.isEmpty()) {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
         }
 
-        taskService.setTaskCompleted(uid, taskId, completed);
-
+        taskService.setTaskImportant(uid, taskID, important);
         return Response.responseSuccess();
     }
 

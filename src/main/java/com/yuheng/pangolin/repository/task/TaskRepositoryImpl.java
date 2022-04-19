@@ -61,6 +61,11 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
+    public void deleteTask(String TaskID) {
+        taskMapper.deleteTask(TaskID);
+    }
+
+    @Override
     public int getListOrderBy(String listId) {
         return taskMapper.getListOrderBy(listId);
     }

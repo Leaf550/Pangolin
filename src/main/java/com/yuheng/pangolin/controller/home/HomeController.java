@@ -71,8 +71,10 @@ public class HomeController {
         list.setCompletedCount(0);
         list.setCreateTime(System.currentTimeMillis());
         list.setSortedBy(0);
+
         taskService.addTaskList(uid, list);
-        return Response.responseSuccess();
+
+        return Response.responseSuccessWithData(list);
     }
 
     private TasksListPageData getTasksInList(String uid, String listId) {

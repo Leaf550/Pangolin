@@ -16,5 +16,6 @@ public interface TaskRepository {
     void addTask(Task task);
     void addTaskList(TaskList taskList);
     void updateTask(Task task);
+    void deleteTask(String TaskID);
     int getListOrderBy(String listId);
 }

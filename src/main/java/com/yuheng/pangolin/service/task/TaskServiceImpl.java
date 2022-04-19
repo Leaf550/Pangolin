@@ -6,10 +6,7 @@ import com.yuheng.pangolin.repository.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class TaskServiceImpl implements TaskService {
@@ -93,15 +90,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void removeTask(String uid, String taskID) {
-
-    }
-
-    @Override
     public void setTaskCompleted(String uid, String taskID, boolean completed) {
         Task task = getTask(uid, taskID);
         if (task != null) {
             task.setCompleted(completed);
+            taskRepository.updateTask(task);
+        }
+    }
+
+    @Override
+    public void setTaskImportant(String uid, String taskID, boolean important) {
+        Task task = getTask(uid, taskID);
+        if (task != null) {
+            task.setImportant(important);
             taskRepository.updateTask(task);
         }
     }
@@ -112,6 +113,14 @@ public class TaskServiceImpl implements TaskService {
             return;
         }
         taskRepository.updateTask(newTask);
+    }
+
+    @Override
+    public void deleteTask(String uid, String taskID) {
+        if (!isTaskBelongsToUser(uid, taskID)) {
+            return;
+        }
+        taskRepository.deleteTask(taskID);
     }
 
 }

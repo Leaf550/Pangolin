@@ -61,4 +61,8 @@
         where taskId=#{taskId}
     </update>
 
+    <delete id="deleteTask">
+        delete from tasks where taskId=#{taskID}
+    </delete>
+
 </mapper>

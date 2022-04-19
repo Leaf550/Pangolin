@@ -65,7 +65,7 @@ public class AddTaskController {
 
         taskService.addTask(newTask);
 
-        return Response.responseSuccess();
+        return Response.responseSuccessWithData(newTask);
     }
 
 }

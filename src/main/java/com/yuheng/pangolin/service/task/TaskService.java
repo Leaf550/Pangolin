@@ -71,15 +71,12 @@ public interface TaskService {
      */
     void addTask(Task task);
 
-    /**
-     * 删除任务
-     * @param uid 用户uid
-     * @param taskID 要删除的任务ID
-     */
-    void removeTask(String uid, String taskID);
+    void setTaskCompleted(String uid, String taskID, boolean completed);
 
-    public void setTaskCompleted(String uid, String taskID, boolean completed);
+    void setTaskImportant(String uid, String taskID, boolean important);
 
     void editTask(String uid, Task newTask);
+
+    void deleteTask(String uid, String taskID);
 }
 

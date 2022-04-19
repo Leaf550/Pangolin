@@ -18,4 +18,5 @@ public interface TaskMapper {
     void addTask(Task task);
     void updateTask(Task task);
     int getListOrderBy(String listId);
+    void deleteTask(String taskID);
 }
