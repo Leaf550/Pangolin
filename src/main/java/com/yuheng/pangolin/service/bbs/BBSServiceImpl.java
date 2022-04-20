@@ -4,9 +4,11 @@ import com.yuheng.pangolin.model.bbs.BBSComment;
 import com.yuheng.pangolin.model.bbs.BBSCommentRes;
 import com.yuheng.pangolin.model.bbs.BBSPost;
 import com.yuheng.pangolin.model.bbs.BBSPostRes;
+import com.yuheng.pangolin.model.task.Task;
 import com.yuheng.pangolin.model.user.User;
 import com.yuheng.pangolin.model.user.UserRes;
 import com.yuheng.pangolin.repository.bbs.BBSRepository;
+import com.yuheng.pangolin.service.task.TaskService;
 import com.yuheng.pangolin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,19 +20,22 @@ import java.util.List;
 public class BBSServiceImpl implements BBSService {
 
     private final UserService userService;
+    private final TaskService taskService;
     private final BBSRepository bbsRepository;
 
     @Autowired
     BBSServiceImpl(
             UserService userService,
+            TaskService taskService,
             BBSRepository bbsRepository
     ) {
         this.userService = userService;
+        this.taskService = taskService;
         this.bbsRepository = bbsRepository;
     }
 
     @Override
-    public List<BBSPostRes> getBBSHomeModel() {
+    public List<BBSPostRes> getBBSHomeModel(String uid) {
         List<BBSPost> posts = bbsRepository.getAllPost();
         if (posts == null) {
             return null;
@@ -42,7 +47,10 @@ public class BBSServiceImpl implements BBSService {
             postRes.setPostId(post.getPostId());
             postRes.setCreateTime(post.getCreateTime());
             postRes.setContent(post.getContent());
-            postRes.setTaskId(post.getTaskId());
+            Task task = taskService.getTask(uid, post.getTaskId());
+            if (task != null) {
+                postRes.setTask(task);
+            }
             postRes.setPraiseCount(post.getPraiseCount());
             UserRes author = userService.getUserById(post.getAuthorId());
             if (author != null) {
@@ -53,9 +61,6 @@ public class BBSServiceImpl implements BBSService {
 
             List<BBSComment> comments = bbsRepository.getAllCommentForPost(post.getPostId());
             if (comments != null) {
-                comments.sort((o1, o2) -> {
-                    return (int) (o1.getCreateTime() - o2.getCreateTime());
-                });
                 List<BBSCommentRes> responseComments = new ArrayList<>();
                 for (BBSComment comment : comments) {
                     BBSCommentRes commentRes = new BBSCommentRes();
@@ -82,10 +87,6 @@ public class BBSServiceImpl implements BBSService {
 
             responsePosts.add(postRes);
         }
-
-        responsePosts.sort((o1, o2) -> {
-            return (int)(o1.getCreateTime() - o2.getCreateTime());
-        });
 
         return responsePosts;
     }

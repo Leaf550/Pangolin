@@ -7,7 +7,8 @@ public enum StatusCode {
     PWD_ERR(602),
     BAD_TOKEN(603),
     DID_NOT_SIGNIN(604),
-    WRONG_USER(605);
+    WRONG_USER(605),
+    DUPLICATE_SHARE(606);
 
     private final int value;
 

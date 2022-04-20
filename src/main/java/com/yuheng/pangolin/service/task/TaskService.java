@@ -78,5 +78,7 @@ public interface TaskService {
     void editTask(String uid, Task newTask);
 
     void deleteTask(String uid, String taskID);
+
+    void shareTask(String uid, String taskID);
 }
 

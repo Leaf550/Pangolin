@@ -59,9 +59,10 @@ public class AddTaskController {
         newTask.setTime(time.orElse(null));
         newTask.setImportant(isImportant);
         newTask.setCompleted(false);
-        newTask.setCreateTime(System.currentTimeMillis());
+        newTask.setCreateTime(System.currentTimeMillis() / 1000);
         newTask.setPriority(0);
         newTask.setListId(listId);
+        newTask.setShared(false);
 
         taskService.addTask(newTask);
 

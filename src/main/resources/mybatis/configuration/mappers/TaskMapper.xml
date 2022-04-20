@@ -44,10 +44,10 @@
     <insert id="addTask" parameterType="com.yuheng.pangolin.model.task.Task">
         insert into tasks
             (uid, taskId, title, comment, date, time, isImportant, isCompleted,
-             createTime, priority, listId)
+             createTime, priority, listId, shared, completeTime)
         values
             (#{uid}, #{taskId}, #{title}, #{comment}, #{date}, #{time}, #{isImportant},
-             #{isCompleted}, #{createTime}, #{priority}, #{listId})
+             #{isCompleted}, #{createTime}, #{priority}, #{listId}, #{shared}, #{completeTime})
     </insert>
 
     <select id="getListOrderBy">
@@ -57,7 +57,8 @@
     <update id="updateTask">
         update tasks
         set title=#{title}, comment=#{comment}, date=#{date}, time=#{time}, isCompleted=#{isCompleted},
-            isImportant=#{isImportant}, priority=#{priority}, listId=#{listId}
+            isImportant=#{isImportant}, priority=#{priority}, listId=#{listId}, shared=#{shared},
+            completeTime=#{completeTime}
         where taskId=#{taskId}
     </update>
 

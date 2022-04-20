@@ -5,11 +5,11 @@
 <mapper namespace="com.yuheng.pangolin.mapper.BBSMapper">
 
     <select id="selectAllPost" resultType="com.yuheng.pangolin.model.bbs.BBSPost">
-        select * from bbsPosts;
+        select * from bbsPosts order by createTime desc;
     </select>
 
     <select id="selectAllCommentForPostId" resultType="com.yuheng.pangolin.model.bbs.BBSComment">
-        select * from bbsComments where postId=#{postId};
+        select * from bbsComments where postId=#{postId} order by createTime;
     </select>
 
     <insert id="addNewPost" parameterType="com.yuheng.pangolin.model.bbs.BBSPost">

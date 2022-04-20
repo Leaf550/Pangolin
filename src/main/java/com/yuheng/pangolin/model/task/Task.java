@@ -1,8 +1,7 @@
 package com.yuheng.pangolin.model.task;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @Data
 public class Task {
@@ -17,4 +16,6 @@ public class Task {
     private long createTime;
     private int priority;
     private String listId;
+    private boolean shared;
+    private long completeTime;
 }

@@ -58,6 +58,7 @@ public class EditTaskController {
             task.setCompleted(isCompleted);
             task.setPriority(priority);
             task.setListId(listId);
+            task.setShared(false);
 
             taskService.editTask(uid, task);
         } else {

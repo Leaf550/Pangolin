@@ -1,5 +1,6 @@
 package com.yuheng.pangolin.model.bbs;
 
+import com.yuheng.pangolin.model.task.Task;
 import com.yuheng.pangolin.model.user.UserRes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class BBSPostRes {
     private UserRes author;
     private long createTime;
     private String content;
-    private String taskId;
+    private Task task;
     private int praiseCount;
     private List<BBSCommentRes> commentList;
 }

@@ -69,7 +69,7 @@ public class HomeController {
         list.setImageName(imageName);
         list.setTaskCount(0);
         list.setCompletedCount(0);
-        list.setCreateTime(System.currentTimeMillis());
+        list.setCreateTime(System.currentTimeMillis() / 1000);
         list.setSortedBy(0);
 
         taskService.addTaskList(uid, list);

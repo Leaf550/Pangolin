@@ -7,7 +7,7 @@ import com.yuheng.pangolin.model.bbs.BBSPostRes;
 import java.util.List;
 
 public interface BBSService {
-    List<BBSPostRes> getBBSHomeModel();
+    List<BBSPostRes> getBBSHomeModel(String uid);
     boolean createNewPost(BBSPost post);
     boolean createNewComment(BBSComment comment);
     boolean isPostBelongsToUser(String postId, String uid);

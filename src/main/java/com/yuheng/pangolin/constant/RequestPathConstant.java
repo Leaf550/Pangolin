@@ -19,6 +19,7 @@ public class RequestPathConstant {
     public static final String DELETE_TASK = "/deleteTask";
     public static final String SET_TASK_IMPORTANT = "/setTaskImportant";
     public static final String SET_TASK_COMPLETED = "/taskCompleted";
+    public static final String SHARE_TASK = "/shareTask";
     // BBS
     public static final String ALL_BBSPOST = "/getAllBBSPost";
     public static final String CREATE_BBSPOST = "/createBBSPost";

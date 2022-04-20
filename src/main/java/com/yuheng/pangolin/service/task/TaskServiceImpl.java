@@ -49,10 +49,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTask(String uid, String taskId) {
-        if (isTaskBelongsToUser(uid, taskId)) {
-            return taskRepository.getTask(taskId);
+        Task task = taskRepository.getTask(taskId);
+        if (task == null || (!isTaskBelongsToUser(uid, taskId) && !task.isShared())) {
+            return null;
         }
-        return null;
+        return task;
     }
 
     @Override
@@ -91,9 +92,17 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void setTaskCompleted(String uid, String taskID, boolean completed) {
+        if (!isTaskBelongsToUser(uid, taskID)) {
+            return;
+        }
         Task task = getTask(uid, taskID);
         if (task != null) {
             task.setCompleted(completed);
+            if (completed) {
+                task.setCompleteTime(System.currentTimeMillis() / 1000);
+            } else {
+                task.setCompleteTime(0);
+            }
             taskRepository.updateTask(task);
         }
     }
@@ -121,6 +130,17 @@ public class TaskServiceImpl implements TaskService {
             return;
         }
         taskRepository.deleteTask(taskID);
+    }
+
+    @Override
+    public void shareTask(String uid, String taskID) {
+        if (!isTaskBelongsToUser(uid, taskID)) {
+            return;
+        }
+
+        Task task = taskRepository.getTask(taskID);
+        task.setShared(true);
+        taskRepository.updateTask(task);
     }
 
 }
