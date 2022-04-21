@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuheng.pangolin.mapper.UploadImageMapper">
     <insert id="saveImage">
-        insert into images (uid, url) values (#{uid}, #{url})
+        insert into images (uid, url, postId) values (#{uid}, #{url}, #{postId})
     </insert>
+
+    <select id="getImageByPostId" resultType="com.yuheng.pangolin.model.image.Image">
+        select * from images where postId=#{postId}
+    </select>
 </mapper>

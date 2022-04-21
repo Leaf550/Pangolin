@@ -4,10 +4,12 @@ import com.yuheng.pangolin.model.bbs.BBSComment;
 import com.yuheng.pangolin.model.bbs.BBSCommentRes;
 import com.yuheng.pangolin.model.bbs.BBSPost;
 import com.yuheng.pangolin.model.bbs.BBSPostRes;
+import com.yuheng.pangolin.model.image.Image;
 import com.yuheng.pangolin.model.task.Task;
 import com.yuheng.pangolin.model.user.User;
 import com.yuheng.pangolin.model.user.UserRes;
 import com.yuheng.pangolin.repository.bbs.BBSRepository;
+import com.yuheng.pangolin.repository.upload.UploadRepository;
 import com.yuheng.pangolin.service.task.TaskService;
 import com.yuheng.pangolin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,19 @@ public class BBSServiceImpl implements BBSService {
     private final UserService userService;
     private final TaskService taskService;
     private final BBSRepository bbsRepository;
+    private final UploadRepository uploadRepository;
 
     @Autowired
     BBSServiceImpl(
             UserService userService,
             TaskService taskService,
-            BBSRepository bbsRepository
+            BBSRepository bbsRepository,
+            UploadRepository uploadRepository
     ) {
         this.userService = userService;
         this.taskService = taskService;
         this.bbsRepository = bbsRepository;
+        this.uploadRepository = uploadRepository;
     }
 
     @Override
@@ -50,6 +55,10 @@ public class BBSServiceImpl implements BBSService {
             Task task = taskService.getTask(uid, post.getTaskId());
             if (task != null) {
                 postRes.setTask(task);
+            }
+            List<String> imageUrls = uploadRepository.getImageUrlsByPostId(post.getPostId());
+            if (imageUrls != null) {
+                postRes.setImageUrls(imageUrls);
             }
             postRes.setPraiseCount(post.getPraiseCount());
             UserRes author = userService.getUserById(post.getAuthorId());

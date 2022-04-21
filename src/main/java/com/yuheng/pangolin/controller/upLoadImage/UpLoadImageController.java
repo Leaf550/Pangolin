@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UpLoadImageController {
@@ -40,14 +41,20 @@ public class UpLoadImageController {
     @org.springframework.web.bind.annotation.ResponseBody
     ResponseBody<?> upLoadImageBBS(
             @RequestHeader("authorization") String token,
-            @RequestParam("images") MultipartFile[] images
-    ) {
+            @RequestParam("images") MultipartFile[] images,
+            @RequestParam("postId") String postId
+            ) {
         String uid = tokenService.getUserId(token);
         if (uid == null || uid.isEmpty()) {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
         }
 
-        List<String> urls = uploadService.uploadImage(images, uid, imagePathConfig.getBbsPath());
+        List<String> urls = uploadService.uploadImage(
+                images,
+                uid,
+                postId,
+                imagePathConfig.getBbsPath()
+        );
 
         return Response.responseSuccessWithData(urls);
     }
@@ -63,7 +70,12 @@ public class UpLoadImageController {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
         }
 
-        List<String> urls = uploadService.uploadImage(images, uid, imagePathConfig.getBbsPath());
+        List<String> urls = uploadService.uploadImage(
+                images,
+                uid,
+                null,
+                imagePathConfig.getBbsPath()
+        );
 
         return Response.responseSuccessWithData(urls);
     }

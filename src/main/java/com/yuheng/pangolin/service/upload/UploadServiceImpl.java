@@ -35,7 +35,11 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public List<String> uploadImage(MultipartFile[] files, String uid, String subPath) {
+    public List<String> uploadImage(
+            MultipartFile[] files,
+            String uid,
+            String postId,
+            String subPath) {
         String dir = imagePathConfig.getLocalPath() + subPath;
         File targetPath = new File(dir);
 
@@ -53,7 +57,7 @@ public class UploadServiceImpl implements UploadService {
                         + imagePathConfig.getBasePath()
                         + subPath
                         + fileName;
-                uploadRepository.saveImagePath(uid, url);
+                uploadRepository.saveImagePath(uid, url, postId);
                 file.transferTo(targetFile);
                 urls.add(url);
             }

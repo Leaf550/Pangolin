@@ -17,6 +17,7 @@ public class BBSPostRes {
     private long createTime;
     private String content;
     private Task task;
+    private List<String> imageUrls;
     private int praiseCount;
     private List<BBSCommentRes> commentList;
 }
