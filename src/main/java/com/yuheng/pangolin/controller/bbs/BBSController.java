@@ -68,7 +68,7 @@ public class BBSController {
             @RequestHeader("Authorization") String token,
             @RequestParam("content") String content,
             @RequestParam("taskId") String taskId,
-            @RequestParam("images[]") String[] imageUrls
+            @RequestParam(value = "images[]", required = false) Optional<String[]> imageUrls
     ) {
         String uid = tokenService.getUserId(token);
         if (uid == null || uid.isEmpty()) {
@@ -95,7 +95,7 @@ public class BBSController {
 
         boolean succeeded = bbsService.createNewPost(post);
 
-        for (String url: imageUrls) {
+        for (String url: imageUrls.orElse(new String[]{})) {
             uploadService.updateImagePostId(url, post.getPostId());
         }
 
