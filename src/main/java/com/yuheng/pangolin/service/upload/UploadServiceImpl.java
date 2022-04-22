@@ -38,7 +38,6 @@ public class UploadServiceImpl implements UploadService {
     public List<String> uploadImage(
             MultipartFile[] files,
             String uid,
-            String postId,
             String subPath) {
         String dir = imagePathConfig.getLocalPath() + subPath;
         File targetPath = new File(dir);
@@ -46,7 +45,7 @@ public class UploadServiceImpl implements UploadService {
         List<String> urls = new ArrayList<>();
         try {
             for (MultipartFile file : files) {
-                String fileName = Encryptor.generateUUID() + ".png";
+                String fileName = Encryptor.generateUUID() + ".jpeg";
                 File targetFile = new File(targetPath, fileName);
                 if (file.isEmpty()) {
                     continue;
@@ -57,7 +56,7 @@ public class UploadServiceImpl implements UploadService {
                         + imagePathConfig.getBasePath()
                         + subPath
                         + fileName;
-                uploadRepository.saveImagePath(uid, url, postId);
+                uploadRepository.saveImagePath(uid, url, null);
                 file.transferTo(targetFile);
                 urls.add(url);
             }
@@ -66,5 +65,10 @@ public class UploadServiceImpl implements UploadService {
         }
 
         return urls;
+    }
+
+    @Override
+    public void updateImagePostId(String url, String postId) {
+        uploadRepository.updateImagePostId(url, postId);
     }
 }

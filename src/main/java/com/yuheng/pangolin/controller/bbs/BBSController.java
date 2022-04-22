@@ -14,9 +14,11 @@ import com.yuheng.pangolin.model.task.Task;
 import com.yuheng.pangolin.service.bbs.BBSService;
 import com.yuheng.pangolin.service.task.TaskService;
 import com.yuheng.pangolin.service.token.TokenService;
+import com.yuheng.pangolin.service.upload.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,16 +28,19 @@ public class BBSController {
     private final TokenService tokenService;
     private final TaskService taskService;
     private final BBSService bbsService;
+    private final UploadService uploadService;
 
     @Autowired
     BBSController(
             TokenService tokenService,
             TaskService taskService,
-            BBSService bbsService
+            BBSService bbsService,
+            UploadService uploadService
     ) {
         this.bbsService = bbsService;
         this.taskService = taskService;
         this.tokenService = tokenService;
+        this.uploadService = uploadService;
     }
 
     @GetMapping(RequestPathConstant.ALL_BBSPOST)
@@ -62,7 +67,8 @@ public class BBSController {
     ResponseBody<?> createPost(
             @RequestHeader("Authorization") String token,
             @RequestParam("content") String content,
-            @RequestParam("taskId") String taskId
+            @RequestParam("taskId") String taskId,
+            @RequestParam("images[]") String[] imageUrls
     ) {
         String uid = tokenService.getUserId(token);
         if (uid == null || uid.isEmpty()) {
@@ -88,6 +94,10 @@ public class BBSController {
         post.setPraiseCount(0);
 
         boolean succeeded = bbsService.createNewPost(post);
+
+        for (String url: imageUrls) {
+            uploadService.updateImagePostId(url, post.getPostId());
+        }
 
         return succeeded
                 ? Response.responseSuccess()

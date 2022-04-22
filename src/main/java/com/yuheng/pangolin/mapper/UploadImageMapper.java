@@ -9,4 +9,5 @@ import java.util.List;
 public interface UploadImageMapper {
     void saveImage(String uid, String url, String postId);
     List<Image> getImageByPostId(String postId);
+    void updateImagePostId(String url, String postId);
 }

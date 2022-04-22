@@ -5,4 +5,5 @@ import java.util.List;
 public interface UploadRepository {
     void saveImagePath(String uid, String url, String postId);
     List<String> getImageUrlsByPostId(String postId);
+    void updateImagePostId(String url, String postId);
 }

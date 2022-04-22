@@ -10,4 +10,9 @@
     <select id="getImageByPostId" resultType="com.yuheng.pangolin.model.image.Image">
         select * from images where postId=#{postId}
     </select>
+
+    <update id="updateImagePostId">
+        update images set postId=#{postId} where url=#{url}
+    </update>
+
 </mapper>

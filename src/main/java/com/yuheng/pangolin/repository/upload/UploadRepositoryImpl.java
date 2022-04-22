@@ -33,4 +33,9 @@ public class UploadRepositoryImpl implements UploadRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void updateImagePostId(String url, String postId) {
+        uploadImageMapper.updateImagePostId(url, postId);
+    }
+
 }

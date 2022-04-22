@@ -41,9 +41,8 @@ public class UpLoadImageController {
     @org.springframework.web.bind.annotation.ResponseBody
     ResponseBody<?> upLoadImageBBS(
             @RequestHeader("authorization") String token,
-            @RequestParam("images") MultipartFile[] images,
-            @RequestParam("postId") String postId
-            ) {
+            @RequestParam("images") MultipartFile[] images
+    ) {
         String uid = tokenService.getUserId(token);
         if (uid == null || uid.isEmpty()) {
             return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
@@ -52,7 +51,6 @@ public class UpLoadImageController {
         List<String> urls = uploadService.uploadImage(
                 images,
                 uid,
-                postId,
                 imagePathConfig.getBbsPath()
         );
 
@@ -73,7 +71,6 @@ public class UpLoadImageController {
         List<String> urls = uploadService.uploadImage(
                 images,
                 uid,
-                null,
                 imagePathConfig.getBbsPath()
         );
 

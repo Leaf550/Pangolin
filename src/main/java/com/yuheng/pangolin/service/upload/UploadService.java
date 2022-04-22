@@ -6,5 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface UploadService {
-    List<String> uploadImage(MultipartFile[] files, String uid, String postId, String subPath);
+    List<String> uploadImage(MultipartFile[] files, String uid, String subPath);
+    void updateImagePostId(String url, String postId);
 }
