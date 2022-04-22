@@ -24,4 +24,5 @@ public class RequestPathConstant {
     public static final String ALL_BBSPOST = "/getAllBBSPost";
     public static final String CREATE_BBSPOST = "/createBBSPost";
     public static final String CREATE_BBSCOMMENT = "/createBBSComment";
+    public static final String PRAISE_POST = "/praisePost";
 }

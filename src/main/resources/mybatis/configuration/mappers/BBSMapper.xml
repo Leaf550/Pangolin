@@ -8,6 +8,10 @@
         select * from bbsPosts order by createTime desc;
     </select>
 
+    <select id="selectPostById" resultType="com.yuheng.pangolin.model.bbs.BBSPost">
+        select * from bbsPosts where postId=#{postId};
+    </select>
+
     <select id="selectAllCommentForPostId" resultType="com.yuheng.pangolin.model.bbs.BBSComment">
         select * from bbsComments where postId=#{postId} order by createTime;
     </select>
@@ -17,6 +21,12 @@
             (postId, authorId, createTime, content, taskId, praiseCount)
         values
             (#{postId}, #{authorId}, #{createTime}, #{content}, #{taskId}, #{praiseCount})
+    </insert>
+
+    <insert id="updatePost" parameterType="com.yuheng.pangolin.model.bbs.BBSPost">
+        update bbsPosts
+        set content=#{content}, taskId=#{taskId}, praiseCount=#{praiseCount}
+        where postId=#{postId}
     </insert>
 
     <insert id="addNewComment" parameterType="com.yuheng.pangolin.model.bbs.BBSComment">

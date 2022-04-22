@@ -1,6 +1,7 @@
 package com.yuheng.pangolin.repository.bbs;
 
 import com.yuheng.pangolin.mapper.BBSMapper;
+import com.yuheng.pangolin.mapper.PraiseMapper;
 import com.yuheng.pangolin.model.bbs.BBSComment;
 import com.yuheng.pangolin.model.bbs.BBSPost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,15 @@ import java.util.List;
 public class BBSRepositoryImpl implements BBSRepository {
 
     private final BBSMapper bbsMapper;
+    private final PraiseMapper praiseMapper;
 
     @Autowired
-    BBSRepositoryImpl(BBSMapper bbsMapper) {
+    BBSRepositoryImpl(
+            BBSMapper bbsMapper,
+            PraiseMapper praiseMapper
+    ) {
         this.bbsMapper = bbsMapper;
+        this.praiseMapper = praiseMapper;
     }
 
     @Override
@@ -46,5 +52,25 @@ public class BBSRepositoryImpl implements BBSRepository {
     @Override
     public boolean addNewComment(BBSComment comment) {
         return bbsMapper.addNewComment(comment);
+    }
+
+    @Override
+    public void updatePost(BBSPost post) {
+        bbsMapper.updatePost(post);
+    }
+
+    @Override
+    public void praisePost(String uid, String postId) {
+        praiseMapper.addPraise(postId, uid);
+    }
+
+    @Override
+    public List<String> praisedUsersInPost(String postId) {
+        return praiseMapper.praisedUsersInPost(postId);
+    }
+
+    @Override
+    public List<String> praisedPostsByUser(String uid) {
+        return praiseMapper.praisedPostsByUser(uid);
     }
 }

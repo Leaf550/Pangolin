@@ -1,5 +1,6 @@
 package com.yuheng.pangolin.service.bbs;
 
+import com.yuheng.pangolin.mapper.PraiseMapper;
 import com.yuheng.pangolin.model.bbs.BBSComment;
 import com.yuheng.pangolin.model.bbs.BBSCommentRes;
 import com.yuheng.pangolin.model.bbs.BBSPost;
@@ -68,6 +69,9 @@ public class BBSServiceImpl implements BBSService {
                 continue;
             }
 
+            List<String> praisedUsers = bbsRepository.praisedUsersInPost(post.getPostId());
+            postRes.setPraised(praisedUsers.contains(uid));
+
             List<BBSComment> comments = bbsRepository.getAllCommentForPost(post.getPostId());
             if (comments != null) {
                 List<BBSCommentRes> responseComments = new ArrayList<>();
@@ -120,5 +124,13 @@ public class BBSServiceImpl implements BBSService {
     public boolean isCommentBelongsToUser(String commentId, String uid) {
         BBSComment comment = bbsRepository.getCommentById(commentId);
         return comment.getSourceUserId().equals(uid);
+    }
+
+    @Override
+    public void praisePost(String uid, String postId) {
+        BBSPost post = bbsRepository.getPostById(postId);
+        post.setPraiseCount(post.getPraiseCount() + 1);
+        bbsRepository.updatePost(post);
+        bbsRepository.praisePost(uid, postId);
     }
 }

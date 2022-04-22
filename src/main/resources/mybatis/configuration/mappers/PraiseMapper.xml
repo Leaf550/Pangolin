@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuheng.pangolin.mapper.PraiseMapper">
+<!--    addPraise-->
+<!--    praisedUsersInPost-->
+<!--    praisedPostsByUser-->
+
+    <insert id="addPraise">
+        insert into praise
+            (uid, postId)
+        values
+            (#{uid}, #{postId})
+    </insert>
+
+    <select id="praisedUsersInPost" resultType="java.lang.String">
+        select uid from praise where postId=#{postId}
+    </select>
+
+    <select id="praisedPostsByUser" resultType="java.lang.String">
+        select postId from praise where uid=#{uid}
+    </select>
+
+</mapper>

@@ -12,4 +12,5 @@ public interface BBSService {
     boolean createNewComment(BBSComment comment);
     boolean isPostBelongsToUser(String postId, String uid);
     boolean isCommentBelongsToUser(String commentId, String uid);
+    void praisePost(String uid, String postId);
 }

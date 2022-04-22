@@ -13,5 +13,6 @@ public interface BBSMapper {
     BBSPost selectPostById(String postId);
     BBSComment selectCommentWithId(String commentId);
     boolean addNewPost(BBSPost post);
+    void updatePost(BBSPost post);
     boolean addNewComment(BBSComment comment);
 }

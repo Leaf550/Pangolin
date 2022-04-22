@@ -132,4 +132,19 @@ public class BBSController {
                 : Response.responseFailure(StatusCode.UNKNOWN_ERR, ResponseMessage.FAILURE);
     }
 
+    @GetMapping(RequestPathConstant.PRAISE_POST)
+    ResponseBody<?> praisePost(
+            @RequestHeader("Authorization") String token,
+            @RequestParam("postId") String postId
+    ) {
+        String uid = tokenService.getUserId(token);
+        if (uid == null || uid.isEmpty()) {
+            return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
+        }
+
+        bbsService.praisePost(uid, postId);
+
+        return Response.responseSuccess();
+    }
+
 }

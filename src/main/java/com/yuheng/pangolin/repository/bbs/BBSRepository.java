@@ -12,4 +12,8 @@ public interface BBSRepository {
     BBSComment getCommentById(String commentId);
     boolean addNewPost(BBSPost post);
     boolean addNewComment(BBSComment comment);
+    void updatePost(BBSPost post);
+    void praisePost(String uid, String postId);
+    List<String> praisedUsersInPost(String postId);
+    List<String> praisedPostsByUser(String uid);
 }

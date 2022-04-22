@@ -69,4 +69,6 @@ public class TaskRepositoryImpl implements TaskRepository {
     public int getListOrderBy(String listId) {
         return taskMapper.getListOrderBy(listId);
     }
+
+
 }
