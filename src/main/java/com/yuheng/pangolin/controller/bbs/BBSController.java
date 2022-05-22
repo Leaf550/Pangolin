@@ -101,7 +101,6 @@ public class BBSController {
     ResponseBody<?> createComment(
             @RequestHeader("Authorization") String token,
             @RequestParam("postId") String postId,
-            @RequestParam("sourceUserId") String sourceUserId,
             @RequestParam(value = "targetUserId", required = false) Optional<String> targetUserId,
             @RequestParam("content") String content
     )  {
@@ -113,7 +112,7 @@ public class BBSController {
         BBSComment comment = new BBSComment();
         comment.setCommentId(Encryptor.generateUUID());
         comment.setPostId(postId);
-        comment.setSourceUserId(sourceUserId);
+        comment.setSourceUserId(uid);
         comment.setTargetUserId(targetUserId.orElse(null));
         comment.setContent(content);
         comment.setCreateTime(System.currentTimeMillis() / 1000);
