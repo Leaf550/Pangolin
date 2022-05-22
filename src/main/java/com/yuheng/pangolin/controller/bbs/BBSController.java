@@ -44,15 +44,8 @@ public class BBSController {
     }
 
     @GetMapping(RequestPathConstant.ALL_BBSPOST)
-    ResponseBody<?> getAllBBSPost(
-            @RequestHeader("Authorization") String token
-    ) {
-        String uid = tokenService.getUserId(token);
-        if (uid == null || uid.isEmpty()) {
-            return Response.responseFailure(StatusCode.DID_NOT_SIGNIN, ResponseMessage.FAILURE);
-        }
-
-        List<BBSPostRes> responsePosts = bbsService.getBBSHomeModel(uid);
+    ResponseBody<?> getAllBBSPost() {
+        List<BBSPostRes> responsePosts = bbsService.getBBSHomeModel("");
         if (responsePosts == null) {
             return Response.responseFailure(StatusCode.UNKNOWN_ERR, ResponseMessage.FAILURE);
         }

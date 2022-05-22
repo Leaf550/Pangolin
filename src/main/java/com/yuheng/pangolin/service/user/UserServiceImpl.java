@@ -30,7 +30,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Token signUp(@NonNull String username, @NonNull String password, UserCallBack userCallBack) {
+    public Token signUp(@NonNull String username,
+                        @NonNull String password,
+                        UserCallBack userCallBack) {
         if (this.hasUserWithUsername(username)) {
             userCallBack.callback(StatusCode.USER_EXISTED);
             return null;

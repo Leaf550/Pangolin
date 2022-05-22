@@ -51,7 +51,7 @@ public class Encryptor {
         return new String(Base64.getDecoder().decode(encoded));
     }
 
-    // HmacMD5
+    // Salt
     public static String generateHmacMD5Salt() {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("HmacMD5");
@@ -64,6 +64,7 @@ public class Encryptor {
         }
     }
 
+    // HmacMD5
     public static String hmacMD5(String message, String salt) {
         try {
             SecretKeySpec key = new SecretKeySpec(salt.getBytes(), "HmacMD5");

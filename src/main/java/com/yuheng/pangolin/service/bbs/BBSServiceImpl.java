@@ -1,13 +1,10 @@
 package com.yuheng.pangolin.service.bbs;
 
-import com.yuheng.pangolin.mapper.PraiseMapper;
 import com.yuheng.pangolin.model.bbs.BBSComment;
 import com.yuheng.pangolin.model.bbs.BBSCommentRes;
 import com.yuheng.pangolin.model.bbs.BBSPost;
 import com.yuheng.pangolin.model.bbs.BBSPostRes;
-import com.yuheng.pangolin.model.image.Image;
 import com.yuheng.pangolin.model.task.Task;
-import com.yuheng.pangolin.model.user.User;
 import com.yuheng.pangolin.model.user.UserRes;
 import com.yuheng.pangolin.repository.bbs.BBSRepository;
 import com.yuheng.pangolin.repository.upload.UploadRepository;
@@ -73,6 +70,7 @@ public class BBSServiceImpl implements BBSService {
             postRes.setPraised(praisedUsers.contains(uid));
 
             List<BBSComment> comments = bbsRepository.getAllCommentForPost(post.getPostId());
+            System.out.println(post.getPostId());
             if (comments != null) {
                 List<BBSCommentRes> responseComments = new ArrayList<>();
                 for (BBSComment comment : comments) {

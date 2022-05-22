@@ -24,7 +24,8 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Token createTokenByUser(User user) {
         Key key = getHS256Key();
-        Date expiration = new Date(System.currentTimeMillis() + tokenConfig.getExpiration() * 1000);
+        Date expiration = new Date(System.currentTimeMillis()
+                + tokenConfig.getExpiration() * 1000);
         String tokenString = Jwts.builder()
                 .setSubject(user.getUid())
                 .claim("username", user.getUsername())
