@@ -1,7 +1,8 @@
 package com.yuheng.pangolin.service.token;
 
 import com.yuheng.pangolin.config.TokenConfig;
-import com.yuheng.pangolin.model.Token;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,16 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Token createTokenByUserID(String uid) {
+    public Token createTokenByUser(User user) {
         Key key = getHS256Key();
-        Date expiration = new Date(System.currentTimeMillis() + tokenConfig.getExpiration() * 1000);
+        Date expiration = new Date(System.currentTimeMillis()
+                + tokenConfig.getExpiration() * 1000);
         String tokenString = Jwts.builder()
+                .setSubject(user.getUid())
+                .claim("username", user.getUsername())
+                .claim("level", user.getLevel())
+                .claim("experience", user.getExperience())
                 .setExpiration(expiration)
-                .setSubject(uid)
                 .signWith(key)
                 .compact();
         return new Token(tokenString);
@@ -34,6 +39,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Claims parseToken(String token) {
+        if (token == null || token.isEmpty()) {
+            return null;
+        }
         Key key = getHS256Key();
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -50,6 +58,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String getUserId(String token) {
+        if (token == null || token.isEmpty()) {
+            return null;
+        }
         Claims claims = parseToken(token);
         return claims.getSubject();
     }

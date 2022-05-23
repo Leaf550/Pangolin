@@ -1,9 +1,13 @@
 package com.yuheng.pangolin.repository.user;
 
 import com.yuheng.pangolin.mapper.UserMapper;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.User;
+import lombok.NoArgsConstructor;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
@@ -22,7 +26,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
+        User user = userMapper.getUserByUsername(username);
+        System.out.println(user);
+        return user;
     }
 
     @Override

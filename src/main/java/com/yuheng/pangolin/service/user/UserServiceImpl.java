@@ -1,14 +1,18 @@
 package com.yuheng.pangolin.service.user;
 
+import com.yuheng.pangolin.constant.StatusCode;
 import com.yuheng.pangolin.encryption.Encryptor;
-import com.yuheng.pangolin.exception.user.UserException;
-import com.yuheng.pangolin.model.Token;
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.user.User;
+import com.yuheng.pangolin.model.user.UserRes;
 import com.yuheng.pangolin.repository.user.UserRepository;
 import com.yuheng.pangolin.service.token.TokenService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -26,13 +30,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Token signUp(@NonNull String username, @NonNull String password) throws UserException {
-        if (username.isEmpty() || password.isEmpty()) {
-            throw new UserException("账号或密码不能为空");
-        }
-
+    public Token signUp(@NonNull String username,
+                        @NonNull String password,
+                        UserCallBack userCallBack) {
         if (this.hasUserWithUsername(username)) {
-            throw new UserException("用户名已经存在啦～");
+            userCallBack.callback(StatusCode.USER_EXISTED);
+            return null;
         }
 
         String salt = Encryptor.generateHmacMD5Salt();
@@ -48,35 +51,45 @@ public class UserServiceImpl implements UserService {
         user.setExperience(0);
 
         if (userRepository.addUser(user) < 1) {
-            System.out.println("1");
-            throw new UserException("似乎因为一些奇怪的事情注册失败了...");
+            userCallBack.callback(StatusCode.UNKNOWN_ERR);
+            return null;
         }
 
-        System.out.println("2");
-
-        return tokenService.createTokenByUserID(uid);
+        userCallBack.callback(StatusCode.OK);
+        return tokenService.createTokenByUser(user);
     }
 
     @Override
-    public Token signIn(String username, String password) throws UserException {
-        if (username.isEmpty() || password.isEmpty()) {
-            throw new UserException("账号或密码不能为空");
-        }
-
+    public Token signIn(String username, String password, UserCallBack userCallback) {
         User user = userRepository.getUserByUsername(username);
+        if (user == null) {
+            userCallback.callback(StatusCode.PWD_ERR);
+            return null;
+        }
         String stored = user.getSecPassword();
         String salt = user.getSalt();
         String input = Encryptor.hmacMD5(password, salt);
         if (input == null || !input.equals(stored)) {
-            throw new UserException("账号或密码错误");
+            userCallback.callback(StatusCode.PWD_ERR);
+            return null;
         }
 
-        return tokenService.createTokenByUserID(user.getUid());
+        userCallback.callback(StatusCode.OK);
+        return tokenService.createTokenByUser(user);
     }
 
     @Override
     public void signOut(String token) {
 
+    }
+
+    @Override
+    public UserRes getUserById(String uid) {
+        User user = userRepository.getUserByUID(uid);
+        if (user == null) {
+            return null;
+        }
+        return new UserRes(user);
     }
 
     @Override

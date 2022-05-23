@@ -2,8 +2,12 @@ package com.yuheng.pangolin.controller.user;
 
 import com.yuheng.pangolin.constant.RequestParameterConstant;
 import com.yuheng.pangolin.constant.RequestPathConstant;
-import com.yuheng.pangolin.exception.user.UserException;
-import com.yuheng.pangolin.model.Token;
+import com.yuheng.pangolin.constant.ResponseMessage;
+import com.yuheng.pangolin.constant.StatusCode;
+import com.yuheng.pangolin.model.user.Token;
+import com.yuheng.pangolin.model.response.Response;
+import com.yuheng.pangolin.model.response.ResponseBody;
+import com.yuheng.pangolin.model.user.User;
 import com.yuheng.pangolin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 @RestController
@@ -23,28 +29,28 @@ public class UserController {
     }
 
     @PostMapping(RequestPathConstant.SIGN_UP)
-    Token signUp(
+    ResponseBody<?> signUp(
             @RequestParam(RequestParameterConstant.USERNAME) String username,
             @RequestParam(RequestParameterConstant.PASSWORD) String password
     ) {
-        try {
-            return userService.signUp(username, password);
-        } catch (UserException e) {
-            System.out.println(e.getMessage());
+        AtomicReference<StatusCode> statusCode = new AtomicReference<StatusCode>(null);
+        Token token = userService.signUp(username, password, statusCode::set);
+        if (statusCode.get() == StatusCode.OK) {
+            return Response.responseSuccessWithData(token);
         }
-        return null;
+        return Response.responseFailure(statusCode.get(), ResponseMessage.FAILURE);
     }
 
-    @GetMapping(RequestPathConstant.SIGN_IN)
-    Token signIn(
+    @PostMapping(RequestPathConstant.SIGN_IN)
+    ResponseBody<?> signIn(
             @RequestParam(RequestParameterConstant.USERNAME) String username,
             @RequestParam(RequestParameterConstant.PASSWORD) String password
     ) {
-        try {
-            return userService.signIn(username, password);
-        } catch (UserException e) {
-            System.out.println(e.getMessage());
+        AtomicReference<StatusCode> statusCode = new AtomicReference<StatusCode>(null);
+        Token token = userService.signIn(username, password, statusCode::set);
+        if (statusCode.get() == StatusCode.OK) {
+            return Response.responseSuccessWithData(token);
         }
-        return null;
+        return Response.responseFailure(statusCode.get(), ResponseMessage.FAILURE);
     }
 }

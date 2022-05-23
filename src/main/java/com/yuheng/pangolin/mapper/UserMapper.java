@@ -1,6 +1,6 @@
 package com.yuheng.pangolin.mapper;
 
-import com.yuheng.pangolin.model.User;
+import com.yuheng.pangolin.model.user.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

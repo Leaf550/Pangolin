@@ -1,6 +1,6 @@
 package com.yuheng.pangolin.exception;
 
-public class BaseException extends RuntimeException {
+public class BaseException extends Exception {
     public BaseException() {
         super();
     }
